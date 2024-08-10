@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           'Reorderable ListView',
           style: TextStyle(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
