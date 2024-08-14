@@ -65,57 +65,87 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
-      appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.grey.shade900,
-        title: Container(
-          height: 38,
-          child: TextField(
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[850],
-                contentPadding: EdgeInsets.all(0),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.grey.shade500,
-                ),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide.none),
-                hintStyle: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-                hintText: "Search users"),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.grey.shade900,
+          title: Container(
+            height: 38,
+            child: TextField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[850],
+                  contentPadding: const EdgeInsets.all(0),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey.shade500,
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide.none),
+                  hintStyle:
+                      TextStyle(fontSize: 14, color: Colors.grey.shade500),
+                  hintText: "Search users"),
+            ),
           ),
         ),
-      ),
-      body: ReorderableListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return userComponent(
-            user: _users[index],
-            key: ValueKey(_users[index]),
-          );
-        },
-        itemCount: _users.length,
-        onReorder: (oldIndex, newIndex) {
-          setState(() {
-            if (newIndex > oldIndex) {
-              newIndex = newIndex - 1;
-            }
-            final element = _users.removeAt(oldIndex);
-            _users.insert(newIndex, element);
-          });
-        },
-      ),
-    );
+        body: ReorderableListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              key: ValueKey(_users[index]),
+              padding: const EdgeInsets.all(0),
+              child: Material(
+                color:
+                    Colors.grey.shade900, 
+                child: ReorderableDragStartListener(
+                  index: index,
+                  child: userComponent(
+                      user: _users[index], key: ValueKey(_users[index])),
+                ),
+              ),
+            );
+          },
+          itemCount: _users.length,
+          onReorder: (oldIndex, newIndex) {
+            setState(() {
+              if (newIndex > oldIndex) {
+                newIndex = newIndex - 1;
+              }
+              final element = _users.removeAt(oldIndex);
+              _users.insert(newIndex, element);
+            });
+          },
+        )
+
+        // ReorderableListView.builder(
+        //   physics: const BouncingScrollPhysics(),
+        //   itemBuilder: (context, index) {
+        //     return userComponent(
+        //       user: _users[index],
+        //       key: ValueKey(_users[index]),
+        //     );
+        //   },
+        //   itemCount: _users.length,
+        //   onReorder: (oldIndex, newIndex) {
+        //     setState(() {
+        //       if (newIndex > oldIndex) {
+        //         newIndex = newIndex - 1;
+        //       }
+        //       final element = _users.removeAt(oldIndex);
+        //       _users.insert(newIndex, element);
+        //     });
+        //   },
+        // ),
+        );
   }
 
   userComponent({required User user, required ValueKey key}) {
     return Container(
       key: key,
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      padding: EdgeInsets.only(top: 10, bottom: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -127,12 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(50),
                   child: Image.network(user.image),
                 )),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w500)),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(user.username, style: TextStyle(color: Colors.grey[500])),
@@ -147,10 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: AnimatedContainer(
               height: 35,
               width: 110,
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
-                  color:
-                      user.isFollowedByMe ? Colors.blue[700] : Color(0xffffff),
+                  color: user.isFollowedByMe
+                      ? Colors.blue[700]
+                      : const Color(0xffffff),
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
                     color: user.isFollowedByMe
