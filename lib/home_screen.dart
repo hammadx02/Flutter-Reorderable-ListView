@@ -65,80 +65,64 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
+      appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.grey.shade900,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey.shade900,
-          title: Container(
-            height: 38,
-            child: TextField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[850],
-                  contentPadding: const EdgeInsets.all(0),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.grey.shade500,
-                  ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide.none),
-                  hintStyle:
-                      TextStyle(fontSize: 14, color: Colors.grey.shade500),
-                  hintText: "Search users"),
-            ),
+        title: Container(
+          height: 38,
+          child: TextField(
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[850],
+                contentPadding: const EdgeInsets.all(0),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey.shade500,
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide.none),
+                hintStyle: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+                hintText: "Search users"),
           ),
         ),
-        body: ReorderableListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Padding(
-              key: ValueKey(_users[index]),
-              padding: const EdgeInsets.all(0),
-              child: Material(
-                color:
-                    Colors.grey.shade900, 
-                child: ReorderableDragStartListener(
-                  index: index,
-                  child: userComponent(
-                      user: _users[index], key: ValueKey(_users[index])),
+      ),
+      body: ReorderableListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Padding(
+            key: ValueKey(_users[index]),
+            padding: const EdgeInsets.all(0),
+            child: Material(
+              color: Colors.grey.shade900,
+              child: ReorderableDragStartListener(
+                index: index,
+                child: userComponent(
+                  user: _users[index],
+                  key: ValueKey(
+                    _users[index],
+                  ),
                 ),
               ),
-            );
-          },
-          itemCount: _users.length,
-          onReorder: (oldIndex, newIndex) {
-            setState(() {
+            ),
+          );
+        },
+        itemCount: _users.length,
+        onReorder: (oldIndex, newIndex) {
+          setState(
+            () {
               if (newIndex > oldIndex) {
                 newIndex = newIndex - 1;
               }
               final element = _users.removeAt(oldIndex);
               _users.insert(newIndex, element);
-            });
-          },
-        )
-
-        // ReorderableListView.builder(
-        //   physics: const BouncingScrollPhysics(),
-        //   itemBuilder: (context, index) {
-        //     return userComponent(
-        //       user: _users[index],
-        //       key: ValueKey(_users[index]),
-        //     );
-        //   },
-        //   itemCount: _users.length,
-        //   onReorder: (oldIndex, newIndex) {
-        //     setState(() {
-        //       if (newIndex > oldIndex) {
-        //         newIndex = newIndex - 1;
-        //       }
-        //       final element = _users.removeAt(oldIndex);
-        //       _users.insert(newIndex, element);
-        //     });
-        //   },
-        // ),
-        );
+            },
+          );
+        },
+      ),
+    );
   }
 
   userComponent({required User user, required ValueKey key}) {
