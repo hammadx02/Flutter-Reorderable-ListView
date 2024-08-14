@@ -14,10 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Reorderable ListView',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      // theme: ThemeData.dark(),
       home: const HomeScreen(),
     );
   }
