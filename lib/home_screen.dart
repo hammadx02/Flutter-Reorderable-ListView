@@ -133,25 +133,37 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(children: [
-            Container(
-                width: 60,
-                height: 60,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(user.image),
-                )),
-            const SizedBox(width: 10),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(user.name,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w500)),
-              const SizedBox(
-                height: 5,
+          Row(
+            children: [
+              Container(
+                  width: 60,
+                  height: 60,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.network(user.image),
+                  )),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    user.name,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    user.username,
+                    style: TextStyle(
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ],
               ),
-              Text(user.username, style: TextStyle(color: Colors.grey[500])),
-            ])
-          ]),
+            ],
+          ),
           GestureDetector(
             onTap: () {
               setState(() {
